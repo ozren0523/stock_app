@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>株価予測アプリ</title>
+</head>
+<body>
+  <h1>株価予測アプリ</h1>
+  <form method="POST" action="/">
+    <label for="ticker">銘柄コード:</label>
+    <input type="text" id="ticker" name="ticker" placeholder="例: AAPL" required><br><br>
+
+    <label for="period">期間:</label>
+    <select id="period" name="period">
+      <option value="1y">過去1年</option>
+      <option value="6mo">過去6ヶ月</option>
+      <option value="3mo">過去3ヶ月</option>
+    </select><br><br>
+
+    <label for="model">モデル選択:</label>
+    <select id="model" name="model">
+      <option value="simple_avg">単純平均モデル</option>
+    </select><br><br>
+
+    <button type="submit">予測実行</button>
+  </form>
+</body>
+</html>

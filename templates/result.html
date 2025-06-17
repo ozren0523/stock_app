@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ ticker }} の予測結果</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <h1>{{ ticker }} の予測結果</h1>
+  <p>選択モデル：{{ model }}</p>
+  <p>次の日の予測終値：<strong>{{ prediction }} USD</strong></p>
+
+  <!-- Plotlyグラフの表示 -->
+  <div>
+    {{ plot_div|safe }}
+  </div>
+
+  <br>
+  <a href="/">戻る</a>
+</body>
+</html>
