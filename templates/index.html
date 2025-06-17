@@ -6,23 +6,37 @@
 </head>
 <body>
   <h1>株価予測アプリ</h1>
+
+  <form method="POST" action="/">
+    <label>企業名から銘柄コード検索：</label>
+    <input type="text" name="company" placeholder="例: トヨタ自動車">
+    <input type="submit" value="検索">
+  </form>
+
+  {% if ticker_code %}
+    <p>検索結果: <strong>{{ ticker_code }}</strong></p>
+  {% endif %}
+
+  {% if error %}
+    <p style="color:red;">{{ error }}</p>
+  {% endif %}
+
   <form method="POST" action="/">
     <label for="ticker">銘柄コード:</label>
-    <input type="text" id="ticker" name="ticker" placeholder="例: AAPL" required><br><br>
-
-    <label for="period">期間:</label>
-    <select id="period" name="period">
-      <option value="1y">過去1年</option>
-      <option value="6mo">過去6ヶ月</option>
-      <option value="3mo">過去3ヶ月</option>
-    </select><br><br>
+    <input type="text" id="ticker" name="ticker" value="{{ ticker_code }}" placeholder="例: 7203.T" required><br><br>
 
     <label for="model">モデル選択:</label>
     <select id="model" name="model">
-      <option value="simple_avg">単純平均モデル</option>
+      <option value="random_forest">ランダムフォレスト</option>
+      <option value="lstm">LSTMモデル</option>
     </select><br><br>
 
     <button type="submit">予測実行</button>
   </form>
+
+  {% if prediction %}
+    <h2>予測結果: {{ prediction }} USD</h2>
+    {{ plot_html|safe }}
+  {% endif %}
 </body>
 </html>
