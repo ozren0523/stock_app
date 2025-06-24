@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from model.model import get_stock_data, predict_stock, create_plot
+from services.chatbot_service import get_stock_code_from_text
 from data.code_map import company_to_code
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ def index():
 
         elif 'ticker' in request.form:
             ticker_code = request.form['ticker'].strip()
-            model_name = request.form.get('model', 'random_forest') 
+            model_name = request.form.get('model', 'random_forest')
             period = '1y'
 
             try:
@@ -45,6 +46,16 @@ def index():
                            prediction=None,
                            plot_html=None,
                            error=None)
+
+@app.route('/chat')
+def chat():
+    return render_template('chat.html')
+
+@app.route('/chat_query', methods=['POST'])
+def chat_query():
+    user_text = request.json.get('message', '')
+    response = get_stock_code_from_text(user_text)
+    return jsonify({'response': response})
 
 if __name__ == '__main__':
     app.run(debug=True)

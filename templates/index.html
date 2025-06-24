@@ -5,38 +5,37 @@
   <title>株価予測アプリ</title>
 </head>
 <body>
-  <h1>株価予測アプリ</h1>
-
-  <form method="POST" action="/">
-    <label>企業名から銘柄コード検索：</label>
-    <input type="text" name="company" placeholder="例: トヨタ自動車">
-    <input type="submit" value="検索">
-  </form>
-
-  {% if ticker_code %}
-    <p>検索結果: <strong>{{ ticker_code }}</strong></p>
-  {% endif %}
-
+  <h1>株価予測</h1>
   {% if error %}
     <p style="color:red;">{{ error }}</p>
   {% endif %}
-
-  <form method="POST" action="/">
+  <form method="post">
+    <label for="company">企業名から銘柄コードを取得:</label>
+    <input type="text" id="company" name="company" value="{{ ticker_code }}" />
+    <button type="submit">検索</button>
+  </form>
+  
+  <hr>
+  
+  <form method="post">
     <label for="ticker">銘柄コード:</label>
-    <input type="text" id="ticker" name="ticker" value="{{ ticker_code }}" placeholder="例: 7203.T" required><br><br>
-
+    <input type="text" id="ticker" name="ticker" value="{{ ticker_code }}" required />
+    <br />
     <label for="model">モデル選択:</label>
     <select id="model" name="model">
       <option value="random_forest">ランダムフォレスト</option>
-      <option value="lstm">LSTMモデル</option>
-    </select><br><br>
-
-    <button type="submit">予測実行</button>
+      <option value="lstm">LSTM</option>
+    </select>
+    <br />
+    <button type="submit">予測開始</button>
   </form>
 
   {% if prediction %}
-    <h2>予測結果: {{ prediction }} USD</h2>
-    {{ plot_html|safe }}
+    <h2>予測結果</h2>
+    <div>{{ plot_html|safe }}</div>
   {% endif %}
+  
+  <hr>
+  <a href="/chat">銘柄コードチャットボットへ</a>
 </body>
 </html>
